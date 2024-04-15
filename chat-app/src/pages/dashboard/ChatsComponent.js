@@ -87,9 +87,11 @@ const Chats = ({ userData, setUserData, setShowChats, showChats }) => {
     //check whether the group exist(in firebase) ,if not then create
 
     const CombinedId =
-      currentUser.uid > user.uid
-        ? currentUser.uid + user.uid
-        : user.uid + currentUser.uid;
+      currentUser.uid != user.uid
+        ? currentUser.uid > user.uid
+          ? currentUser.uid + user.uid
+          : user.uid + currentUser.uid
+        : alert("Don't talk with yourself");
 
     try {
       const res = await getDoc(doc(db, "chats", CombinedId));
@@ -104,8 +106,8 @@ const Chats = ({ userData, setUserData, setShowChats, showChats }) => {
             uid: user.uid,
             displayName: user.displayName,
             photoURL: user.profileInfo ? user.profileInfo.photoURL : "",
-            About: user.profileInfo ? user.profileInfo.About:"",
-            Country:user.profileInfo ? user.profileInfo.Country :"",
+            About: user.profileInfo ? user.profileInfo.About : "",
+            Country: user.profileInfo ? user.profileInfo.Country : "",
           },
           [CombinedId + ".date"]: serverTimestamp(),
         });
@@ -114,9 +116,13 @@ const Chats = ({ userData, setUserData, setShowChats, showChats }) => {
           [CombinedId + ".userinfo"]: {
             uid: currentUser.uid,
             displayName: currentUser.displayName,
-            photoURL: currentUser.profileInfo ?currentUser.profileInfo.photoURL:"",
-            About: currentUser.profileInfo ? currentUser.profileInfo.About :"",
-            Country: currentUser.profileInfo ? currentUser.profileInfo.Country :""
+            photoURL: currentUser.profileInfo
+              ? currentUser.profileInfo.photoURL
+              : "",
+            About: currentUser.profileInfo ? currentUser.profileInfo.About : "",
+            Country: currentUser.profileInfo
+              ? currentUser.profileInfo.Country
+              : "",
           },
           [CombinedId + ".date"]: serverTimestamp(),
         });
@@ -150,245 +156,246 @@ const Chats = ({ userData, setUserData, setShowChats, showChats }) => {
   };
 
   return (
-  
-      <Box
-        sx={{
-          width: {
-            xs: "100%",
-            md:"400px"
-          },
-          height: "100vh",
-          overflowX: "hidden",
-          overflowY: "scroll",
-          boxShadow: "0px 0px 2px rgba(0,0,0,0.25)",
-          px: "15px",
-          backgroundColor:
-            theme.palette.mode === "light"
-              ? "#F8FAFF"
-              : theme.palette.background,
-        }}
-      >
-        <Stack sx={{ height: "100%", width: "100%" }}>
-          <Stack padding={3}>
-            <Typography variant="h5">Chats</Typography>
+    <Box
+      sx={{
+        width: {
+          xs: "100%",
+          md: "400px",
+        },
+        height: "100vh",
+        overflowX: "hidden",
+        overflowY: "scroll",
+        boxShadow: "0px 0px 2px rgba(0,0,0,0.25)",
+        px: "15px",
+        backgroundColor:
+          theme.palette.mode === "light" ? "#F8FAFF" : theme.palette.background,
+      }}
+    >
+      <Stack sx={{ height: "100%", width: "100%" }}>
+        <Stack padding={3}>
+          <Typography variant="h5">Chats</Typography>
+        </Stack>
+        <Stack spacing={3} overflowX={"hidden"}>
+          <Stack width={"100%"}>
+            <BasicTextFields
+              username={username}
+              err={err}
+              user={user}
+              setUser={setUser}
+              userData={userData}
+              setUserData={setUserData}
+              setUserName={setUserName}
+              setErr={setErr}
+            />
           </Stack>
-          <Stack spacing={3} overflowX={"hidden"}>
-            <Stack width={"100%"}>
-              <BasicTextFields
-                username={username}
-                err={err}
-                user={user}
-                setUser={setUser}
-                userData={userData}
-                setUserData={setUserData}
-                setUserName={setUserName}
-                setErr={setErr}
-              />
-            </Stack>
 
-            <Stack direction={"row"} alignItems={"center"} spacing={3}>
-              <Archive size={24} />
-              <Button>Archives</Button>
-            </Stack>
-            <Divider />
-            <Stack
-              sx={{ height: "100%", width: "100%", flexGrow: 1 }}
-              spacing={1}
-              direction={"column"}
-            >
-              <Stack direction={"column"} spacing={2} mt={2}>
-                <Stack width={"100%"} direction={"column"} spacing={2}>
-                  {user && (
-                    <Stack
-                      width={"100%"}
+          <Stack direction={"row"} alignItems={"center"} spacing={3}>
+            <Archive size={24} />
+            <Button>Archives</Button>
+          </Stack>
+          <Divider />
+          <Stack
+            sx={{ height: "100%", width: "100%", flexGrow: 1 }}
+            spacing={1}
+            direction={"column"}
+          >
+            <Stack direction={"column"} spacing={2} mt={2}>
+              <Stack width={"100%"} direction={"column"} spacing={2}>
+                {user && (
+                  <Stack
+                    width={"100%"}
+                    sx={{
+                      cursor: "pointer",
+                    }}
+                    direction={"column"}
+                    spacing={2}
+                    onClick={Handleselect}
+                  >
+                    <Typography variant="caption" color={"#676767"}>
+                      Add the user in your chatlist and start chatting
+                    </Typography>
+                    <Box
                       sx={{
-                        cursor: "pointer",
+                        backgroundColor:
+                          theme.palette.mode === "Light"
+                            ? "white"
+                            : theme.palette.background.paper,
+
+                        width: "100%",
+                        height: "57px",
+                        borderRadius: "20px",
                       }}
                       direction={"column"}
-                      spacing={2}
-                      onClick={Handleselect}
+                      alignItems={"center"}
                     >
-                      <Typography variant="caption" color={"#676767"}>
-                        Add the user in your chatlist and start chatting
-                      </Typography>
-                      <Box
-                        sx={{
-                          backgroundColor:
-                            theme.palette.mode === "Light"
-                              ? "white"
-                              : theme.palette.background.paper,
-
-                          width: "100%",
-                          height: "57px",
-                          borderRadius: "20px",
-                        }}
-                        direction={"column"}
+                      <Stack
+                        direction={"row"}
+                        justifyContent={"space-between"}
                         alignItems={"center"}
+                        marginTop={"6px"}
+                        width={"100%"}
                       >
                         <Stack
                           direction={"row"}
-                          justifyContent={"space-between"}
+                          width={"80%"}
                           alignItems={"center"}
-                          marginTop={"6px"}
-                          width={"100%"}
+                          spacing={2}
+                          marginTop={"2px"}
                         >
-                          <Stack
-                            direction={"row"}
-                            width={"80%"}
-                            alignItems={"center"}
-                            spacing={2}
-                            marginTop={"2px"}
-                          >
-                            <Avatar alt="Remy Sharp" src={user.photoURL} />
+                          <Avatar alt="Remy Sharp" src={user.photoURL} />
 
-                            <Stack direction={"column"}>
-                              <Typography variant="subtitle2">
-                                {user.displayName}
-                              </Typography>
-                            </Stack>
-                          </Stack>
-                          <Stack px={3}>
-                            <Trash onClick={() => setUser(null)} size={32} />
+                          <Stack direction={"column"}>
+                            <Typography variant="subtitle2">
+                              {user.displayName}
+                            </Typography>
                           </Stack>
                         </Stack>
-                      </Box>
-                    </Stack>
-                  )}
+                        <Stack px={3}>
+                          <Trash onClick={() => setUser(null)} size={32} />
+                        </Stack>
+                      </Stack>
+                    </Box>
+                  </Stack>
+                )}
 
-                  {user && <Divider />}
+                {user && <Divider />}
 
-                  {chats && (
-                    <Typography variant="caption" color={"#676767"} spacing={2}>
-                      Chat List
-                    </Typography>
-                  )}
+                {chats && (
+                  <Typography variant="caption" color={"#676767"} spacing={2}>
+                    Chat List
+                  </Typography>
+                )}
 
-                  {chats &&
-                    Object.entries(chats)
-                      .sort((a, b) => b[1].date - a[1].date)
-                      .map((chat) => {
-                        //chatsection paste here
-                        return (
-                          <>
-                            <Box
-                              sx={{
-                                backgroundColor:
-                                  theme.palette.mode === "Light"
-                                    ? "white"
-                                    : theme.palette.background.paper,
+                {chats &&
+                  Object.entries(chats)
+                    .sort((a, b) => b[1].date - a[1].date)
+                    .map((chat) => {
+                      //chatsection paste here
+                      return (
+                        <>
+                          <Box
+                            sx={{
+                              backgroundColor:
+                                theme.palette.mode === "Light"
+                                  ? "white"
+                                  : theme.palette.background.paper,
 
-                                // width: "100%",
-                                height: "57px",
-                                borderRadius: "20px",
-                                cursor: "pointer",
-                                m: "16px",
-                              }}
-                              key={chat[0]}
-                              onClick={() => {
-                                HandleClick(chat[1].userinfo);
-                                setshowCommunication(!showCommunication);
-                                setShowChats(!showChats);
-                              }}
+                              // width: "100%",
+                              height: "57px",
+                              borderRadius: "20px",
+                              cursor: "pointer",
+                              m: "16px",
+                            }}
+                            key={chat[0]}
+                            onClick={() => {
+                              HandleClick(chat[1].userinfo);
+                              setshowCommunication(!showCommunication);
+                              setShowChats(!showChats);
+                            }}
+                          >
+                            <Stack
+                              direction={"row"}
+                              justifyContent={"space-between"}
+                              alignItems={"center"}
+                              marginTop={"6px"}
+                              width={"100%"}
                             >
                               <Stack
                                 direction={"row"}
-                                justifyContent={"space-between"}
+                                width={"80%"}
                                 alignItems={"center"}
-                                marginTop={"6px"}
-                                width={"100%"}
+                                spacing={2}
+                                marginTop={"2px"}
                               >
-                                <Stack
-                                  direction={"row"}
-                                  width={"80%"}
-                                  alignItems={"center"}
-                                  spacing={2}
-                                  marginTop={"2px"}
-                                >
-                                  <Avatar
-                                    alt="Remy Sharp"
-                                    src={chat.userInfo ? chat[1].userInfo.photoURL : null}
-                                  />
-                                  {/* )} */}
-                                  <Stack direction={"column"}>
-                                    <Typography variant="subtitle2">
-                                      {chat[1].userinfo.displayName}
-                                    </Typography>
-                                    <Typography
-                                      variant="caption"
-                                      noWrap
-                                      sx={{
-                                        width: "60%",
-                                        overflow: "hidden",
-                                        textOverflow: "ellipsis",
-                                      }}
-                                    >
-                                      {chat[1].LastMessage?.textData}
-                                    </Typography>
-                                  </Stack>
-                                </Stack>
-                                <Stack
-                                  direction={"column"}
-                                  alignItems={"center"}
-                                  spacing={1.2}
-                                  marginRight={"15px"}
-                                >
-                                  <Typography variant="caption">{}</Typography>
-                                  <Badge color="primary"></Badge>
+                                <Avatar
+                                  alt="Remy Sharp"
+                                  src={
+                                    chat.userInfo
+                                      ? chat[1].userInfo.photoURL
+                                      : null
+                                  }
+                                />
+                                {/* )} */}
+                                <Stack direction={"column"}>
+                                  <Typography variant="subtitle2">
+                                    {chat[1].userinfo.displayName}
+                                  </Typography>
+                                  <Typography
+                                    variant="caption"
+                                    noWrap
+                                    sx={{
+                                      width: "60%",
+                                      overflow: "hidden",
+                                      textOverflow: "ellipsis",
+                                    }}
+                                  >
+                                    {chat[1].LastMessage?.textData}
+                                  </Typography>
                                 </Stack>
                               </Stack>
-                            </Box>
-                          </>
-                        );
-                      })}
+                              <Stack
+                                direction={"column"}
+                                alignItems={"center"}
+                                spacing={1.2}
+                                marginRight={"15px"}
+                              >
+                                <Typography variant="caption">{}</Typography>
+                                <Badge color="primary"></Badge>
+                              </Stack>
+                            </Stack>
+                          </Box>
+                        </>
+                      );
+                    })}
 
-                  <Divider />
+                <Divider />
 
-                  <ChatsAll
-                    chat={chats}
-                    setChats={setChats}
-                    user={user}
-                    setuser={setUser}
-                  />
+                <ChatsAll
+                  chat={chats}
+                  setChats={setChats}
+                  user={user}
+                  setuser={setUser}
+                />
 
-                  <Stack
-                    sx={{
-                      display: "none",
-                    }}
-                  >
-                    <ProfileForm user={user} />
-                  </Stack>
+                <Stack
+                  sx={{
+                    display: "none",
+                  }}
+                >
+                  <ProfileForm user={user} />
                 </Stack>
               </Stack>
             </Stack>
           </Stack>
         </Stack>
+      </Stack>
 
-        <div className="communication">
-          <Box
-            sx={{
-              height: "100%",
-              width: {
-                xs: "100%",
-                md: "",
-              },
-              position: "fixed",
-              top: 0,
-              right: 0,
-              zIndex: {
-                xs: 1,
-                sm: 1,
-              },
-              // backgroundColor: theme.palette.mode ==="light" ? "#F0F4FA" : theme.palette.background.paper
-              display: {
-                xs: showCommunication ? "block" : "none",
-                sm: showCommunication ? "block" : "none",
-              },
-            }}
-          >
-            <Communication setshowCommunication={setshowCommunication} />
-          </Box>
-        </div>
-      </Box>
+      <div className="communication">
+        <Box
+          sx={{
+            height: "100%",
+            width: {
+              xs: "100%",
+              md: "",
+            },
+            position: "fixed",
+            top: 0,
+            right: 0,
+            zIndex: {
+              xs: 1,
+              sm: 1,
+            },
+            // backgroundColor: theme.palette.mode ==="light" ? "#F0F4FA" : theme.palette.background.paper
+            display: {
+              xs: showCommunication ? "block" : "none",
+              sm: showCommunication ? "block" : "none",
+            },
+          }}
+        >
+          <Communication setshowCommunication={setshowCommunication} />
+        </Box>
+      </div>
+    </Box>
   );
 };
 

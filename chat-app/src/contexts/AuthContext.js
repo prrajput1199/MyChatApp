@@ -8,16 +8,16 @@ export const AuthContextProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState({});
 
   useEffect(() => {
+    console.log("Auth=>",auth);
     const res = onAuthStateChanged(auth, (user) => {
-      console.log("user=>",user);
       setCurrentUser(user);
-      console.log("currentUser=>",currentUser);
+      console.log("auth currentUser=>",currentUser);
     });
 
     return () => {
       res();
     };
-  }, []);
+  }, [currentUser]);
 
   return (
     <AuthContext.Provider value={{ currentUser }}>

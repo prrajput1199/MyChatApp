@@ -45,7 +45,7 @@ const ChatsAll = ({ setChats }) => {
         // console.log(doc.id, " => ", doc.data());
         userdata.push({ ...doc.data() });
       });
-      console.log("userdata=>",userdata);
+      console.log("userdata=>", userdata);
       setAlluser(userdata);
     };
     return () => {
@@ -55,11 +55,14 @@ const ChatsAll = ({ setChats }) => {
 
   return (
     <div>
- 
-        <Typography variant="caption" color={"#676767"} >
-          User List
-        </Typography>
+      <Typography variant="caption" color={"#676767"}>
+        User List
+      </Typography>
 
+      <Stack sx={{
+        height:"100vh",
+        overflowY:"scroll"
+      }}>
         {allUser &&
           allUser.map((el) => {
             //chatsection paste here
@@ -70,7 +73,7 @@ const ChatsAll = ({ setChats }) => {
                     theme.palette.mode === "Light"
                       ? "white"
                       : theme.palette.background.paper,
-                  mt:'16px',
+                  mt: "16px",
                   height: "57px",
                   borderRadius: "20px",
                   cursor: "pointer",
@@ -91,7 +94,7 @@ const ChatsAll = ({ setChats }) => {
               </Box>
             );
           })}
-
+      </Stack>
     </div>
   );
 };

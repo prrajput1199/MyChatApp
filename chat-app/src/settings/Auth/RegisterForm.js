@@ -29,7 +29,7 @@ const RegisterForm = () => {
   const [showPassword, setShowPassoword] = useState(false);
   const [photo, setPhoto] = useState(null);
   const [newUser, setnewUser] = useState(false);
-  const [reducerValue, forceUpdate] = useReducer(x => x + 1, 0);
+  const [reducerValue, forceUpdate] = useReducer((x) => x + 1, 0);
   const navigate = useNavigate();
 
   const RegisterSchema = Yup.object().shape({
@@ -104,6 +104,11 @@ const RegisterForm = () => {
       //   photoURL: downloadURL,
       // });
 
+      await updateProfile(res.user, {
+        displayName,
+        photoURL:""
+      });
+
       await setDoc(doc(db, "users", res.user.uid), {
         displayName,
         email,
@@ -114,10 +119,10 @@ const RegisterForm = () => {
       //  create userchat folder
       await setDoc(doc(db, "userChats", res.user.uid), {});
       reset({
-        displayName:"",
-        email:"",
-        Newpassword:""
-      })
+        displayName: "",
+        email: "",
+        Newpassword: "",
+      });
 
       alert("Your account has been created");
       navigate("/app");
@@ -129,10 +134,10 @@ const RegisterForm = () => {
       // }, 4000);
     } catch (error) {
       reset({
-        displayName:"",
-        email:"",
-        Newpassword:""
-      })
+        displayName: "",
+        email: "",
+        Newpassword: "",
+      });
       setError("afterSubmit", {
         ...error,
         message: error.message,

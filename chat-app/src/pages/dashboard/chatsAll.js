@@ -45,13 +45,13 @@ const ChatsAll = ({ setChats }) => {
         // console.log(doc.id, " => ", doc.data());
         userdata.push({ ...doc.data() });
       });
-
+      console.log("userdata=>",userdata);
       setAlluser(userdata);
     };
     return () => {
       getalluser();
     };
-  }, [currentUser.uid]);
+  }, [currentUser]);
 
   return (
     <div>

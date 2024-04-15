@@ -22,20 +22,20 @@ const ChatsAll = ({ setChats }) => {
   const theme = useTheme();
 
   useEffect(() => {
-    const getchatdata = () => {
-      const getRes = onSnapshot(
-        doc(db, "userChats", currentUser.uid),
-        (doc) => {
-          setChats(doc.data());
-          //   setUser(null);
-        }
-      );
+    // const getchatdata = () => {
+    //   const getRes = onSnapshot(
+    //     doc(db, "userChats", currentUser.uid),
+    //     (doc) => {
+    //       setChats(doc.data());
+    //       //   setUser(null);
+    //     }
+    //   );
 
-      return () => {
-        getRes();
-      };
-    };
-    currentUser.uid && getchatdata();
+    //   return () => {
+    //     getRes();
+    //   };
+    // };
+    // currentUser.uid && getchatdata();
 
     const getalluser = async () => {
       const querySnapshot = await getDocs(collection(db, "users"));

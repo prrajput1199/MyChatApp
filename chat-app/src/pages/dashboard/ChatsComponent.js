@@ -54,7 +54,6 @@ const Chats = ({ userData, setUserData, setShowChats, showChats }) => {
   const [showCommunication, setshowCommunication] = useState(false);
 
   //styledbadge
-
   const StyledBadge = styled(Badge)(({ theme }) => ({
     "& .MuiBadge-badge": {
       backgroundColor: "#44b700",
@@ -104,9 +103,9 @@ const Chats = ({ userData, setUserData, setShowChats, showChats }) => {
           [CombinedId + ".userinfo"]: {
             uid: user.uid,
             displayName: user.displayName,
-            photoURL: user.profileInfo.photoURL,
-            About: user.profileInfo.About,
-            Country: user.profileInfo.Country,
+            photoURL: user.profileInfo ? user.profileInfo.photoURL : "",
+            About: user.profileInfo ? user.profileInfo.About:"",
+            Country:user.profileInfo ? user.profileInfo.Country :"",
           },
           [CombinedId + ".date"]: serverTimestamp(),
         });
@@ -115,9 +114,9 @@ const Chats = ({ userData, setUserData, setShowChats, showChats }) => {
           [CombinedId + ".userinfo"]: {
             uid: currentUser.uid,
             displayName: currentUser.displayName,
-            photoURL: currentUser.profileInfo.photoURL,
-            About: currentUser.profileInfo.About,
-            Country: currentUser.profileInfo.Country,
+            photoURL: currentUser.profileInfo ?currentUser.profileInfo.photoURL:"",
+            About: currentUser.profileInfo ? currentUser.profileInfo.About :"",
+            Country: currentUser.profileInfo ? currentUser.profileInfo.Country :""
           },
           [CombinedId + ".date"]: serverTimestamp(),
         });
@@ -307,7 +306,7 @@ const Chats = ({ userData, setUserData, setShowChats, showChats }) => {
                                 >
                                   <Avatar
                                     alt="Remy Sharp"
-                                    src={chat[1].userinfo.photoURL}
+                                    src={chat.userInfo ? chat[1].userInfo.photoURL : null}
                                   />
                                   {/* )} */}
                                   <Stack direction={"column"}>

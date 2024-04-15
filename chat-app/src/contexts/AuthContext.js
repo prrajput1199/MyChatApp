@@ -9,7 +9,9 @@ export const AuthContextProvider = ({ children }) => {
 
   useEffect(() => {
     const res = onAuthStateChanged(auth, (user) => {
+      console.log("user=>",user);
       setCurrentUser(user);
+      console.log("currentUser=>",currentUser);
     });
 
     return () => {

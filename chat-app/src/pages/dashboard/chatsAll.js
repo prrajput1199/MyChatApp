@@ -63,7 +63,7 @@ const ChatsAll = ({ setChats }) => {
         height:"100vh",
         overflowY:{
           xs:"scroll",
-          md:"none"
+          md:"auto"
         }
       }}>
         {allUser &&

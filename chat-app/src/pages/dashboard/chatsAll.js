@@ -15,7 +15,7 @@ import { db } from "../../firebase";
 import { AuthContext } from "../../contexts/AuthContext";
 
 const ChatsAll = ({ setChats }) => {
-  const [allUser, setAlluser] = useState(null);
+  const [allUser, setAlluser] = useState();
 
   const { currentUser } = useContext(AuthContext);
 
@@ -61,7 +61,10 @@ const ChatsAll = ({ setChats }) => {
 
       <Stack sx={{
         height:"100vh",
-        overflowY:"scroll"
+        overflowY:{
+          xs:"scroll",
+          md:"none"
+        }
       }}>
         {allUser &&
           allUser.map((el) => {

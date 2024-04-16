@@ -61,10 +61,6 @@ const ChatsAll = ({ setChats }) => {
 
       <Stack sx={{
         height:"100vh",
-        overflowY:{
-          xs:"scroll",
-          md:"auto"
-        }
       }}>
         {allUser &&
           allUser.map((el) => {
@@ -92,7 +88,7 @@ const ChatsAll = ({ setChats }) => {
                   width={"100%"}
                   height={"100%"}
                 >
-                  <Typography variant="subtitle2">{el.displayName}</Typography>
+                  <Typography variant="subtitle2">{el.email}</Typography>
                 </Stack>
               </Box>
             );

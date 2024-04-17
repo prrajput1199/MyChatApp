@@ -28,9 +28,8 @@ const ChatsAll = ({ setChats }) => {
         // doc.data() is never undefined for query doc snapshots
         // console.log(doc.id, " => ", doc.data());
         // userdata.push({ ...doc.data() });
-         userdata.push({ ...doc.data()});
+         setAlluser([{ ...doc.data()}]);
       });
-      setAlluser(userdata);
     };
     return () => {
       getalluser();

@@ -10,30 +10,58 @@ import {
 import React, { useContext, useEffect, useState } from "react";
 import { useTheme } from "@emotion/react";
 
-import { collection, doc, onSnapshot, getDocs } from "firebase/firestore";
-import { db } from "../../firebase";
+import { collection, doc, onSnapshot, getDocs, query } from "firebase/firestore";
+import { auth, db } from "../../firebase";
 import { AuthContext } from "../../contexts/AuthContext";
+import { onAuthStateChanged } from "firebase/auth";
 
 const ChatsAll = ({ setChats }) => {
-  const [allUser, setAlluser] = useState({});
+  const [allUser, setAlluser] = useState([]);
   const { currentUser } = useContext(AuthContext);
 
   const theme = useTheme();
 
+  // useEffect(() => {
+  //   const getalluser = async () => {
+  //     const querySnapshot = await getDocs(collection(db, "users"));
+  //     const userdata = [];
+  //     querySnapshot.forEach((doc) => {
+  //       // doc.data() is never undefined for query doc snapshots
+  //       // console.log(doc.id, " => ", doc.data());
+  //       userdata.push({ ...doc.data() });
+
+  //     });
+  //     setAlluser(userdata);
+  //   };
+  //   return () => {
+  //     getalluser();
+  //   };
+  // }, [currentUser]);
   useEffect(() => {
-    const getalluser = async () => {
-      const querySnapshot = await getDocs(collection(db, "users"));
-      const userdata = [];
-      querySnapshot.forEach((doc) => {
-        // doc.data() is never undefined for query doc snapshots
-        // console.log(doc.id, " => ", doc.data());
-        // userdata.push({ ...doc.data() });
-         setAlluser([{ ...doc.data()}]);
-      });
-    };
-    return () => {
-      getalluser();
-    };
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        const Users = [];
+
+        try {
+          // Create a query to potentially filter users (optional)
+          const q = query(collection(db, "users")); // Unfiltered query
+
+          // Get all user documents
+          const querySnapshot = await getDocs(q);
+
+          querySnapshot.forEach((doc) => {
+            Users.push({ ...doc.data() });
+          });
+
+          setAlluser(Users);
+        } catch (error) {
+          console.error("Error fetching users:", error);
+          // Handle errors appropriately (e.g., display error message)
+        }
+      }
+    });
+
+    return unsubscribe;
   }, [currentUser]);
 
   console.log("outside=>",allUser);
@@ -49,7 +77,7 @@ const ChatsAll = ({ setChats }) => {
       }}>
         {console.log("I am inside ,alluser=>",allUser)}
         {allUser &&
-          Object.entries(allUser).map((el) => {
+          allUser.map((el) => {
             console.log("el=>",el);
             //chatsection paste here
             return (
@@ -64,7 +92,7 @@ const ChatsAll = ({ setChats }) => {
                   borderRadius: "20px",
                   cursor: "pointer",
                 }}
-                key={el[1].uid}
+                key={el.uid}
               >
                 <Stack
                   direction={"row"}
@@ -75,7 +103,7 @@ const ChatsAll = ({ setChats }) => {
                   width={"100%"}
                   height={"100%"}
                 >
-                  <Typography variant="subtitle2">{el[1].displayName}</Typography>
+                  <Typography variant="subtitle2">{el.displayName}</Typography>
                 </Stack>
               </Box>
             );

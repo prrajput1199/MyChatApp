@@ -15,45 +15,27 @@ import { db } from "../../firebase";
 import { AuthContext } from "../../contexts/AuthContext";
 
 const ChatsAll = ({ setChats }) => {
-  const [allUser, setAlluser] = useState([]);
-
+  const [allUser, setAlluser] = useState();
   const { currentUser } = useContext(AuthContext);
 
   const theme = useTheme();
 
   useEffect(() => {
-    // const getchatdata = () => {
-    //   const getRes = onSnapshot(
-    //     doc(db, "userChats", currentUser.uid),
-    //     (doc) => {
-    //       setChats(doc.data());
-    //       //   setUser(null);
-    //     }
-    //   );
-
-    //   return () => {
-    //     getRes();
-    //   };
-    // };
-    // currentUser.uid && getchatdata();
-
     const getalluser = async () => {
       const querySnapshot = await getDocs(collection(db, "users"));
-      const userdata = [];
+      const userdata=[];
       querySnapshot.forEach((doc) => {
         // doc.data() is never undefined for query doc snapshots
         // console.log(doc.id, " => ", doc.data());
         // userdata.push({ ...doc.data() });
-        allUser.push({ ...doc.data() });
-        console.log("alluser=>",allUser)
+        userdata.push({ ...doc.data()});
       });
-      // console.log("userdata=>", userdata);
-      // setAlluser(userdata);
+      setAlluser(userdata);
     };
     return () => {
       getalluser();
     };
-  }, [currentUser]);
+  }, []);
 
   return (
     <div>
@@ -64,6 +46,7 @@ const ChatsAll = ({ setChats }) => {
       <Stack sx={{
         height:"100vh",
       }}>
+        {console.log("I am inside ,alluser=>",allUser)}
         {allUser &&
           allUser?.map((el) => {
             //chatsection paste here
@@ -90,7 +73,7 @@ const ChatsAll = ({ setChats }) => {
                   width={"100%"}
                   height={"100%"}
                 >
-                  <Typography variant="subtitle2">{el.email}</Typography>
+                  <Typography variant="subtitle2">{el.displayName}</Typography>
                 </Stack>
               </Box>
             );

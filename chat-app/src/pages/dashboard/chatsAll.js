@@ -15,7 +15,7 @@ import { db } from "../../firebase";
 import { AuthContext } from "../../contexts/AuthContext";
 
 const ChatsAll = ({ setChats }) => {
-  const [allUser, setAlluser] = useState();
+  const [allUser, setAlluser] = useState(null);
 
   const { currentUser } = useContext(AuthContext);
 
@@ -47,6 +47,7 @@ const ChatsAll = ({ setChats }) => {
       });
       console.log("userdata=>", userdata);
       setAlluser(userdata);
+      console.log("alluser=>",allUser)
     };
     return () => {
       getalluser();

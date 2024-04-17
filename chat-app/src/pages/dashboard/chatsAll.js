@@ -15,7 +15,7 @@ import { db } from "../../firebase";
 import { AuthContext } from "../../contexts/AuthContext";
 
 const ChatsAll = ({ setChats }) => {
-  const [allUser, setAlluser] = useState([]);
+  const [allUser, setAlluser] = useState({});
   const { currentUser } = useContext(AuthContext);
 
   const theme = useTheme();
@@ -23,18 +23,21 @@ const ChatsAll = ({ setChats }) => {
   useEffect(() => {
     const getalluser = async () => {
       const querySnapshot = await getDocs(collection(db, "users"));
-      const userdata=[];
+      const userdata = [];
       querySnapshot.forEach((doc) => {
         // doc.data() is never undefined for query doc snapshots
         // console.log(doc.id, " => ", doc.data());
         // userdata.push({ ...doc.data() });
-        allUser.push({ ...doc.data()});
+         userdata.push({ ...doc.data()});
       });
+      setAlluser(userdata);
     };
     return () => {
       getalluser();
     };
   }, []);
+
+  console.log("outside=>",allUser);
 
   return (
     <div>
@@ -47,7 +50,8 @@ const ChatsAll = ({ setChats }) => {
       }}>
         {console.log("I am inside ,alluser=>",allUser)}
         {allUser &&
-          allUser?.map((el) => {
+          Object.entries(allUser).map((el) => {
+            console.log("el=>",el);
             //chatsection paste here
             return (
               <Box
@@ -61,7 +65,7 @@ const ChatsAll = ({ setChats }) => {
                   borderRadius: "20px",
                   cursor: "pointer",
                 }}
-                key={el.uid}
+                key={el[1].uid}
               >
                 <Stack
                   direction={"row"}
@@ -72,7 +76,7 @@ const ChatsAll = ({ setChats }) => {
                   width={"100%"}
                   height={"100%"}
                 >
-                  <Typography variant="subtitle2">{el.displayName}</Typography>
+                  <Typography variant="subtitle2">{el[1].displayName}</Typography>
                 </Stack>
               </Box>
             );

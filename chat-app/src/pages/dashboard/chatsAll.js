@@ -80,7 +80,6 @@ const ChatsAll = ({ setChats }) => {
                   gap={3}
                   alignItems={"center"}
                   justifyContent={"center"}
-                  marginTop={"6px"}
                   width={"100%"}
                   height={"100%"}
                 >

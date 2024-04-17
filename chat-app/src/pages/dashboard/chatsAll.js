@@ -15,7 +15,7 @@ import { db } from "../../firebase";
 import { AuthContext } from "../../contexts/AuthContext";
 
 const ChatsAll = ({ setChats }) => {
-  const [allUser, setAlluser] = useState();
+  const [allUser, setAlluser] = useState([]);
   const { currentUser } = useContext(AuthContext);
 
   const theme = useTheme();
@@ -28,9 +28,8 @@ const ChatsAll = ({ setChats }) => {
         // doc.data() is never undefined for query doc snapshots
         // console.log(doc.id, " => ", doc.data());
         // userdata.push({ ...doc.data() });
-        userdata.push({ ...doc.data()});
+        allUser.push({ ...doc.data()});
       });
-      setAlluser(userdata);
     };
     return () => {
       getalluser();

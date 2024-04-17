@@ -65,7 +65,7 @@ const ChatsAll = ({ setChats }) => {
         height:"100vh",
       }}>
         {allUser &&
-          allUser.map((el) => {
+          allUser?.map((el) => {
             //chatsection paste here
             return (
               <Box

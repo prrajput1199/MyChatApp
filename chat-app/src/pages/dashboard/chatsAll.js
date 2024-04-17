@@ -21,22 +21,6 @@ const ChatsAll = ({ setChats }) => {
 
   const theme = useTheme();
 
-  // useEffect(() => {
-  //   const getalluser = async () => {
-  //     const querySnapshot = await getDocs(collection(db, "users"));
-  //     const userdata = [];
-  //     querySnapshot.forEach((doc) => {
-  //       // doc.data() is never undefined for query doc snapshots
-  //       // console.log(doc.id, " => ", doc.data());
-  //       userdata.push({ ...doc.data() });
-
-  //     });
-  //     setAlluser(userdata);
-  //   };
-  //   return () => {
-  //     getalluser();
-  //   };
-  // }, [currentUser]);
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
@@ -64,8 +48,6 @@ const ChatsAll = ({ setChats }) => {
     return unsubscribe;
   }, [currentUser]);
 
-  console.log("outside=>",allUser);
-
   return (
     <div>
       <Typography variant="caption" color={"#676767"}>
@@ -78,7 +60,6 @@ const ChatsAll = ({ setChats }) => {
         {console.log("I am inside ,alluser=>",allUser)}
         {allUser &&
           allUser.map((el) => {
-            console.log("el=>",el);
             //chatsection paste here
             return (
               <Box

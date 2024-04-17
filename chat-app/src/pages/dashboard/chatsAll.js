@@ -35,7 +35,7 @@ const ChatsAll = ({ setChats }) => {
     return () => {
       getalluser();
     };
-  }, []);
+  }, [currentUser]);
 
   console.log("outside=>",allUser);
 

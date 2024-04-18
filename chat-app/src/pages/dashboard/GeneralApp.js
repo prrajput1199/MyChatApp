@@ -10,7 +10,7 @@ import SharedMessages from "../../components/settings/SharedMessages.js";
 import StarredMessages from "../../components/settings/StarredMessage.js";
 import { Outlet } from "react-router-dom";
 import { ChatContext } from "../../contexts/ChatContext";
-import chatapp from "../../Images/chatapp.jpeg";
+import meeting from "../../Images/meeting.jpg";
 import "./GeneralApp.css";
 
 const GeneralApp = () => {
@@ -69,10 +69,10 @@ const GeneralApp = () => {
             }}
           >
             <img
-              src={chatapp}
+              src={meeting}
               alt=""
               style={{
-                width: "400px",
+                maxWidth: "60%",
                 height: "auto",
                 objectFit: "cover",
                 borderRadius: "50%",

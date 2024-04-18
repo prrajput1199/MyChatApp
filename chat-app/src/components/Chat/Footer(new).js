@@ -241,6 +241,7 @@ export function BasicTextFields({ setOpenPicker, openPicker }) {
                         src={img}
                         style={{
                           width: "180px",
+                          display:"none"
                         }}
                         className="inputFooter"
                       />

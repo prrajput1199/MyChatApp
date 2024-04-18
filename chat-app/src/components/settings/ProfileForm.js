@@ -136,6 +136,9 @@ const ProfileForm = ({ user }) => {
               id="file"
               name="file"
               accept="image/*"
+              style={{
+                display:"none"
+              }}
             />
           </Stack>
 

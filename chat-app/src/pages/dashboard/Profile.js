@@ -6,6 +6,8 @@ import ProfileForm from "../../components/settings/ProfileForm";
 import { Link as RouterLink } from "react-router-dom";
 import Communication from "../../components/Chat/communication";
 import profileImage from "../../Images/profileImage.png";
+import profile from "../../Images/profile.jpg";
+
 const Profile = () => {
   const theme = useTheme();
   return (
@@ -89,10 +91,10 @@ const Profile = () => {
             }}
           >
             <img
-              src={profileImage}
+              src={profile}
               alt=""
               style={{
-                maxWidth: "80%",
+                maxWidth: "60%",
                 height:"auto",
                 objectFit: "cover",
                 borderRadius: "50%",
